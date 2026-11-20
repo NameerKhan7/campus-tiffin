@@ -13,3 +13,6 @@ Captured on 20 November 2026. App screenshots use Chrome at 1280 px and 390 px w
 - `deployment-results.json`: public HTTP status and page title for seven routes.
 
 Full-page screenshots include content below the initial viewport. PDF figures use cropped excerpts for readability. No screenshot was altered to invent a state. Real-site findings are limited to the captured views.
+
+- `keyboard-results.json`: two keyboard-only main journeys, Chrome version and final console capture (no warnings/errors).
+- `production-journey-results.json`: public production delivery-to-confirmation checks at both widths.

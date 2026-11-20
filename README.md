@@ -74,7 +74,7 @@ The cart is saved per browser. Filters are kept while navigating but reset on a 
 
 ## Completed verification (20 November 2026)
 - `npm test`: 13 tests pass; `npm run build`: successful.
-- Chrome browser automation: 42 checks pass at widths 1280 px and 390 px; zero uncaught page errors in the main 36-check run. Evidence and machine-readable results are in `evidence/`.
+- Chrome browser automation: 42 checks pass at widths 1280 px and 390 px, plus two complete keyboard-only journeys and two public-production delivery journeys. The final keyboard run recorded no console warnings/errors or uncaught page errors. Evidence and machine-readable results are in `evidence/`.
 - Public Vercel routes `/`, `/menu`, `/items/m01`, `/cart`, `/checkout`, `/confirmation`, and `/anything` return the app. Direct `/items/m01` refresh works.
 - Reference investigation: https://bundukhan.pk/menu, delivery branch DHA Lahore. The report limits its findings to the captured listing/branch views.
 - Vercel deployment is live via the CLI. Automatic GitHub deployment linking was rejected because the Vercel account has no GitHub Login Connection. Future deployments can use `npx vercel --prod` after login; account linking remains an account-owner task.
@@ -82,3 +82,6 @@ The cart is saved per browser. Filters are kept while navigating but reset on a 
 
 ## Git history
 The first commit preserves the supplied implementation. Later commits record actual validation, mobile layout, evidence and documentation work. No historical implementation milestones were fabricated.
+
+## Original brief alignment
+The report follows the eight required sections in order. `evidence/keyboard-results.json` records Chrome version, full keyboard operation and console results. `evidence/production-journey-results.json` records the public delivery journey at both widths. The source ZIP uses `22i-1695_MuhammadNameerKhan_C_A#02.zip`. Repository history began from supplied working code and cannot demonstrate all five original development milestones; this is disclosed in the report.

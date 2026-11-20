@@ -10,3 +10,6 @@ Public route checks: 7 passed, all HTTP 200 with expected app content.
 Nested-route refresh: /items/m01 passed.
 Vercel state: READY, production alias campus-tiffin.vercel.app.
 GitHub auto-deployment connection: not linked; Vercel account requires a GitHub Login Connection. CLI deployment succeeded.
+
+Full keyboard-only journeys: 2 passed; console warnings/errors and uncaught page errors: 0.
+Public production delivery journeys: 2 passed; failed HTTP asset requests: 0.

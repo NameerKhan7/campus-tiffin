@@ -39,38 +39,38 @@ Reference: https://bundukhan.pk/menu; reviewed 20 November 2026 in Chrome at 128
 ## Decision 1: Combined filters in shared state
 | Field | Content |
 |---|---|
-| Observed problem | The captured listing offers category selection and search, but no visible diet selector or price-sort control. Comparing suitable meals on a budget requires scanning cards. |
+| Problem | The captured listing offers category selection and search, but no visible diet selector or price-sort control. Comparing suitable meals on a budget requires scanning cards. |
 | Decision | Combine search, category, diet and sort. Keep them in App state so opening an item and returning preserves the comparison. |
 | Alternative | URL query parameters for shareable, refresh-persistent filters. |
 | Reason | Students can narrow meals by both budget and diet without repeatedly rebuilding a selection. |
 | Tradeoff | Filters survive route navigation but reset on full refresh; App owns more state. |
-| Code | src/App.jsx; src/components/FilterBar.jsx; src/utils/filterItems.js |
-| Evidence | reference-menu-desktop.png; filters-1280.png; filters-390.png; browser-results.json |
+| Code location | src/App.jsx (filters/updateFilter); src/components/FilterBar.jsx (FilterBar); src/utils/filterItems.js (filterAndSort) |
+| Evidence | Set Vegetarian + Meals + price ascending; search daal; open Daal and return. Filters remain. Screens: reference-menu-desktop.png, filters-1280.png, filters-390.png. |
 
 ## Decision 2: Comparison information on every card
 | Field | Content |
 |---|---|
-| Observed problem | The captured soup cards show image, name, starting price and add action, with no visible calorie, dietary or explicit nut-allergen tags. |
+| Problem | The captured soup cards show image, name, starting price and add action, with no visible calorie, dietary or explicit nut-allergen tags. |
 | Decision | Show price, calories, diet, spice, nut warnings and stock as text labels on each Campus Tiffin card. Repeat facts in details. |
 | Alternative | Put nutritional and availability facts only on item details. |
 | Reason | Early comparison reduces repeated detail visits; a nut conflict is also enforced at checkout. |
 | Tradeoff | Cards are taller. Nutrition and allergy values are fictional demo data, not verified restaurant data. |
-| Code | src/components/ItemCard.jsx; src/pages/ItemDetailsPage.jsx; src/rules/orderRules.js |
-| Evidence | reference-menu-desktop.png; menu-1280.png; menu-390.png; allergy-block-390.png |
+| Code location | src/components/ItemCard.jsx (ItemCard); src/pages/ItemDetailsPage.jsx (ItemDetailsPage); src/rules/orderRules.js (findNutConflicts/getOrderIssues) |
+| Evidence | Compare menu cards, then add Almond Halwa and tick nut allergy in checkout. Tags are visible; warning names Halwa. Screens: reference-menu-desktop.png, menu-1280.png, menu-390.png, allergy-block-390.png. |
 
 ## Decision 3: Delivery conditions before checkout
 | Field | Content |
 |---|---|
-| Observed problem | Neither the captured initial branch-selection dialog nor the captured menu viewport states a delivery fee or minimum-order threshold. The cost cannot be calculated from those views. |
+| Problem | Neither the captured initial branch-selection dialog nor the captured menu viewport states a delivery fee or minimum-order threshold. The cost cannot be calculated from those views. |
 | Decision | State the Rs 800 delivery minimum, Rs 150 fee and Rs 2000 free-delivery threshold on home/menu. A fixed order bar shows the current subtotal and remaining amount. |
 | Alternative | Reveal all fulfilment conditions at checkout. |
 | Reason | A customer can adjust an order before reaching a checkout block. |
 | Tradeoff | The fixed bar consumes mobile space. Extra footer clearance keeps lower controls reachable. |
-| Code | src/components/CartBar.jsx; src/rules/orderRules.js; src/styles/global.css |
-| Evidence | reference-delivery-dialog.png; delivery-hint-390.png; delivery-block-390.png |
+| Code location | src/components/CartBar.jsx (CartBar); src/rules/orderRules.js (getDeliveryHint/checkDelivery); src/styles/global.css (.cart-bar/.site-footer) |
+| Evidence | Add one Rs 300 Daal; read the Rs 500 shortfall; select delivery at checkout. Below-minimum order is blocked. Screens: reference-delivery-dialog.png, delivery-hint-390.png, delivery-block-390.png. |
 
 
-## 6. Implementation and evidence
+## 6. Implemented application
 React 18 components are routed with React Router. App owns shared state and passes data and callbacks to pages. Cart lines, fees and totals are derived by pure helpers. Form fields are controlled; validation preserves input values and presents specific errors. useEffect handles async loading, storage and toast cleanup. A stale loader response is ignored after cleanup. localStorage access is guarded and saved form types are normalized.
 
 | Concept | Code |
@@ -90,7 +90,7 @@ Screenshots are provided at both required widths for home, menu, combined filter
 ## 7. Verification
 - npm test: 13 passed, 0 failed, using node:test and the same functions imported by the app.
 - npm run build: successful Vite production build.
-- Chrome automation: 36 main checks plus 6 extra checks, all passed, at 1280 px and 390 px. The main run recorded zero uncaught page errors. Main screenshot checks found no document-level horizontal overflow.
+- Chrome automation: 36 main checks plus 6 extra checks, all passed, at 1280 px and 390 px. Two complete keyboard-only journeys and two public-production delivery journeys also passed. The main run recorded zero uncaught page errors. The final keyboard run also captured console warnings/errors and uncaught page errors: none remained after resolving router future-flag warnings and adding the favicon. Main screenshot checks found no document-level horizontal overflow.
 - Public production: all seven requested routes returned HTTP 200 and the application. Unknown paths intentionally return the app's not-found view through the SPA rewrite. Direct /items/m01 refresh rendered Chicken Karahi Box.
 
 | Case | Action | Observed |
@@ -108,14 +108,19 @@ Screenshots are provided at both required widths for home, menu, combined filter
 | Quantity | Raise Daal to 5 | Add action disabled for sixth |
 | Persistence | Refresh cart and confirmation | Cart quantity and confirmation retained |
 | Malformed saved form | Store wrong field types and refresh | Safe default values restored, no crash |
-| Keyboard | Tab from page | Focus reaches an interactive control; visible focus style present in CSS |
+| Keyboard | Complete browse, filter/sort, details, add/change quantities, checkout and confirm using keyboard | Passed at both widths; visible focus checked; Back/Forward restored correct routes |
 | Content fallbacks | Open Mint Raita and long bundle title | Missing-description message; long name wraps |
 
-Improvement verification: (1) combine diet/category/search/sort, open Daal, return: selection remains; (2) menu tags and nut warning make comparison and conflict explicit; (3) Rs 300 cart displays Rs 500 shortfall before checkout, then delivery is blocked consistently. Exact Rs 799/800 boundaries are unit-tested because the menu's fixed item prices do not form Rs 799.
+### Improvement verification (Task 6.1)
+| Improvement | User actions | Expected | Observed / evidence |
+|---|---|---|---|
+| Discovery controls and retained comparison | Choose Vegetarian + Meals + price ascending; search daal; open details; return | Combined controls narrow results; choices remain after navigation | One Daal result; same choices on return at both widths. filters-1280.png / filters-390.png; browser-results.json |
+| Comparison facts and allergy feedback | Inspect menu tags; add Almond Halwa; select nut allergy in checkout | Facts visible before selecting; conflicting item identified; no confirmation | Tags displayed; Almond Halwa named in warning. menu-1280.png / allergy-block-390.png; rule tests |
+| Early delivery conditions | Add one Rs 300 Daal; read fixed bar; select delivery and submit | Rs 500 shortfall visible while browsing; below-minimum delivery blocked | Hint and checkout both report Rs 500 required; remains on checkout. delivery-hint-390.png / delivery-block-390.png |
 
-Fixes from verification: rejected unsupported saved fulfilment methods, areas and slots; normalized malformed saved form fields; replaced a hardcoded reconciliation maximum with MAX_PER_ITEM; added mobile footer clearance after the fixed order bar obstructed Reload menu.
+Fixes from verification: rejected unsupported saved fulfilment methods, areas and slots; normalized malformed saved form fields; replaced a hardcoded reconciliation maximum with MAX_PER_ITEM; resolved React Router future-flag console warnings and the missing favicon; added mobile footer clearance after the fixed order bar obstructed Reload menu.
 
-## 8. Delivery and limitations
-Git history preserves the supplied baseline, then records actual fixes and evidence/documentation work. Production was deployed using the Vercel CLI. Automatic GitHub deployment linking was rejected because the Vercel account needs a GitHub Login Connection; the current public deployment works. Future updates can deploy through the authenticated CLI.
+## 8. Limitations
+The repository began from the supplied working application. Its real history does not demonstrate all five development milestones required by Task 7.1. Existing commits were not fabricated or backdated. Production was deployed using the Vercel CLI. Automatic GitHub deployment linking was rejected because the Vercel account needs a GitHub Login Connection; the current public deployment works. Future updates can deploy through the authenticated CLI.
 
-The app simulates orders and payment. Stock does not decrease after confirmation. Illustrations are emoji fallbacks, not product photos. Nutrition/allergy data is fictional; the allergy rule does not model cross-contamination. Cart, form and last order are browser-local. Filters reset on a full refresh. Nicknames accept English letters, numbers and spaces. Keyboard verification was a focus smoke check, not a full assistive-technology audit. No performance or sales uplift was measured. Student preparation for the viva remains necessary; VIVA_GUIDE.md explains the concepts and suggested changes.
+The app simulates orders and payment. Stock does not decrease after confirmation. Illustrations are emoji fallbacks, not product photos. Nutrition/allergy data is fictional; the allergy rule does not model cross-contamination. Cart, form and last order are browser-local. Filters reset on a full refresh. Nicknames accept English letters, numbers and spaces. Keyboard verification is documented separately in evidence/keyboard-results.json; it is not a full assistive-technology audit. No performance or sales uplift was measured. 

@@ -1,0 +1,16 @@
+{
+  "browser": "157.0.8103.52",
+  "results": [
+    {
+      "width": 1280,
+      "test": "Keyboard-only menu, search, sort, details, add/increase/decrease, checkout validation and confirmation; Back/Forward",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "Keyboard-only menu, search, sort, details, add/increase/decrease, checkout validation and confirmation; Back/Forward",
+      "status": "PASS"
+    }
+  ],
+  "messages": []
+}

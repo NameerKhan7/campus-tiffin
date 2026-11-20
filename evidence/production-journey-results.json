@@ -1,0 +1,16 @@
+{
+  "url": "https://campus-tiffin.vercel.app",
+  "results": [
+    {
+      "width": 1280,
+      "test": "Public menu to delivery confirmation, correct Rs 1050 total",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "Public menu to delivery confirmation, correct Rs 1050 total",
+      "status": "PASS"
+    }
+  ],
+  "failedAssets": []
+}
