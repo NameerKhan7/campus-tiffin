@@ -1,0 +1,7 @@
+work/
+evidence/
+reports/
+*.zip
+*.md
+.git/
+node_modules/

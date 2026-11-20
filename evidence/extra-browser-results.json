@@ -1,0 +1,32 @@
+[
+  {
+    "width": 1280,
+    "test": "delivery order includes Rs 150 fee and confirms",
+    "status": "PASS"
+  },
+  {
+    "width": 1280,
+    "test": "delivery below minimum remains blocked",
+    "status": "PASS"
+  },
+  {
+    "width": 1280,
+    "test": "malformed persisted form recovers without crash",
+    "status": "PASS"
+  },
+  {
+    "width": 390,
+    "test": "delivery order includes Rs 150 fee and confirms",
+    "status": "PASS"
+  },
+  {
+    "width": 390,
+    "test": "delivery below minimum remains blocked",
+    "status": "PASS"
+  },
+  {
+    "width": 390,
+    "test": "malformed persisted form recovers without crash",
+    "status": "PASS"
+  }
+]

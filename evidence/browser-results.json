@@ -1,0 +1,185 @@
+{
+  "results": [
+    {
+      "width": 1280,
+      "test": "home responsive",
+      "status": "PASS"
+    },
+    {
+      "width": 1280,
+      "test": "13 menu items",
+      "status": "PASS"
+    },
+    {
+      "width": 1280,
+      "test": "combined filters survive detail navigation",
+      "status": "PASS"
+    },
+    {
+      "width": 1280,
+      "test": "no search matches",
+      "status": "PASS"
+    },
+    {
+      "width": 1280,
+      "test": "cart persists on refresh",
+      "status": "PASS"
+    },
+    {
+      "width": 1280,
+      "test": "empty form rejected",
+      "status": "PASS"
+    },
+    {
+      "width": 1280,
+      "test": "valid pickup order confirmed",
+      "status": "PASS"
+    },
+    {
+      "width": 1280,
+      "test": "confirmation persists",
+      "status": "PASS"
+    },
+    {
+      "width": 1280,
+      "test": "invalid item route",
+      "status": "PASS"
+    },
+    {
+      "width": 1280,
+      "test": "unknown route",
+      "status": "PASS"
+    },
+    {
+      "width": 1280,
+      "test": "missing description fallback",
+      "status": "PASS"
+    },
+    {
+      "width": 1280,
+      "test": "long name fits",
+      "status": "PASS"
+    },
+    {
+      "width": 1280,
+      "test": "error and retry recovery",
+      "status": "PASS"
+    },
+    {
+      "width": 1280,
+      "test": "empty dataset",
+      "status": "PASS"
+    },
+    {
+      "width": 1280,
+      "test": "sold out, lower stock and removed items reconciled",
+      "status": "PASS"
+    },
+    {
+      "width": 1280,
+      "test": "sixth quantity blocked",
+      "status": "PASS"
+    },
+    {
+      "width": 1280,
+      "test": "nut allergy conflict identified",
+      "status": "PASS"
+    },
+    {
+      "width": 1280,
+      "test": "keyboard focus reachable",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "home responsive",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "13 menu items",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "combined filters survive detail navigation",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "no search matches",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "cart persists on refresh",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "empty form rejected",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "valid pickup order confirmed",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "confirmation persists",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "invalid item route",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "unknown route",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "missing description fallback",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "long name fits",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "error and retry recovery",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "empty dataset",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "sold out, lower stock and removed items reconciled",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "sixth quantity blocked",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "nut allergy conflict identified",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "keyboard focus reachable",
+      "status": "PASS"
+    }
+  ],
+  "errors": []
+}

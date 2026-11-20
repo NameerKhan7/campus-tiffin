@@ -3,9 +3,9 @@
 **Student:** Muhammad Nameer Khan | **Roll No:** 22i-1695 | **Section:** C
 **Course:** CS4032 Web Programming, Assignment 02 (Fall 2026)
 
-- GitHub: https://github.com/YOUR-USERNAME/campus-tiffin
-- Deployment: https://YOUR-SITE-URL
-- Final commit hash: `PASTE-HASH-HERE`
+- GitHub: https://github.com/NameerKhan7/campus-tiffin
+- Deployment: https://campus-tiffin.vercel.app
+- Submission commit: recorded in the final PDF and `SUBMISSION_COMMIT.txt` inside the submission ZIP. Run `git rev-parse HEAD` to identify this checkout.
 
 ## Description
 Campus Tiffin is a fictional meal-prep business for university students in Islamabad. Customers browse 13 meals,
@@ -71,3 +71,14 @@ The cart is saved per browser. Filters are kept while navigating but reset on a 
 | localStorage | `src/utils/storage.js`, `src/App.jsx` | `readStorage`, `writeStorage` |
 | Conditional rendering | `src/components/DataGate.jsx`, `EmptyState.jsx` | loading/error/empty |
 | Automated test | `tests/orderRules.test.js` | `node --test` |
+
+## Completed verification (20 November 2026)
+- `npm test`: 13 tests pass; `npm run build`: successful.
+- Chrome browser automation: 42 checks pass at widths 1280 px and 390 px; zero uncaught page errors in the main 36-check run. Evidence and machine-readable results are in `evidence/`.
+- Public Vercel routes `/`, `/menu`, `/items/m01`, `/cart`, `/checkout`, `/confirmation`, and `/anything` return the app. Direct `/items/m01` refresh works.
+- Reference investigation: https://bundukhan.pk/menu, delivery branch DHA Lahore. The report limits its findings to the captured listing/branch views.
+- Vercel deployment is live via the CLI. Automatic GitHub deployment linking was rejected because the Vercel account has no GitHub Login Connection. Future deployments can use `npx vercel --prod` after login; account linking remains an account-owner task.
+- Source report: `REPORT_DRAFT.md`; final PDF, exact submission commit and source ZIP are supplied separately. `DECISIONS.md` records observed problems and implementation tradeoffs.
+
+## Git history
+The first commit preserves the supplied implementation. Later commits record actual validation, mobile layout, evidence and documentation work. No historical implementation milestones were fabricated.

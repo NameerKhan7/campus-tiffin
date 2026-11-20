@@ -1,37 +1,37 @@
 # Frontend decisions
 
-> The "Problem" lines are written to match the three problems this site fixes. Replace the wording with what YOU observed
-> on your reference website, and add your own screenshots.
+Reference: https://bundukhan.pk/menu; reviewed 20 November 2026 in Chrome at 1280 px and 390 px, delivery branch DHA Lahore. Findings below describe the captured menu and branch-selection views, not every page or every branch of the reference site.
 
-## Decision 1: Keep filters in shared state (interaction / state)
+## Decision 1: Combined filters in shared state
 | Field | Content |
 |---|---|
-| Problem | Navigation resets filters or selections: after opening an item and going back, the list returns to its default view. |
-| Decision | Search, category, diet and sort live in `App.jsx` state, not inside the menu page, so they stay when the user visits a details page and returns. The menu also says when order items are hidden by a filter. |
-| Alternative | Store filters in the URL (`/menu?diet=veg`) so they can be shared and bookmarked. |
-| Reason | Students compare many items. Keeping their filters saves repeated work. State was the simpler option and fits what we learned. |
-| Tradeoff | Filters are lost on a full refresh, and App holds more state. Hidden order items need extra feedback to avoid confusion. |
-| Code location | `src/App.jsx` (`filters`, `updateFilter`), `src/pages/MenuPage.jsx` (`hiddenInOrder`) |
-| Evidence | Screenshot: filter Vegetarian, open an item, press Back. Filter is still applied. |
+| Observed problem | The captured listing offers category selection and search, but no visible diet selector or price-sort control. Comparing suitable meals on a budget requires scanning cards. |
+| Decision | Combine search, category, diet and sort. Keep them in App state so opening an item and returning preserves the comparison. |
+| Alternative | URL query parameters for shareable, refresh-persistent filters. |
+| Reason | Students can narrow meals by both budget and diet without repeatedly rebuilding a selection. |
+| Tradeoff | Filters survive route navigation but reset on full refresh; App owns more state. |
+| Code | src/App.jsx; src/components/FilterBar.jsx; src/utils/filterItems.js |
+| Evidence | reference-menu-desktop.png; filters-1280.png; filters-390.png; browser-results.json |
 
-## Decision 2: Show everything needed to compare on the card (information hierarchy)
+## Decision 2: Comparison information on every card
 | Field | Content |
 |---|---|
-| Problem | Listings leave out information needed to compare options (calories, diet, stock). |
-| Decision | Each card shows name, price (largest), then tags for calories, diet, spice, nuts and stock with text labels. Details page repeats them and adds what is included. |
-| Alternative | Show only name and price on the card and put the rest on the details page. |
-| Reason | Students on a budget decide by price and diet. Seeing stock and nut warnings early avoids opening or ordering unsuitable items. |
-| Tradeoff | Cards are busier, so tags are kept short and the price stays visually dominant. |
-| Code location | `src/components/ItemCard.jsx`, `src/pages/ItemDetailsPage.jsx` |
-| Evidence | Screenshot of the menu at 390 px and 1280 px showing the tags. |
+| Observed problem | The captured soup cards show image, name, starting price and add action, with no visible calorie, dietary or explicit nut-allergen tags. |
+| Decision | Show price, calories, diet, spice, nut warnings and stock as text labels on each Campus Tiffin card. Repeat facts in details. |
+| Alternative | Put nutritional and availability facts only on item details. |
+| Reason | Early comparison reduces repeated detail visits; a nut conflict is also enforced at checkout. |
+| Tradeoff | Cards are taller. Nutrition and allergy values are fictional demo data, not verified restaurant data. |
+| Code | src/components/ItemCard.jsx; src/pages/ItemDetailsPage.jsx; src/rules/orderRules.js |
+| Evidence | reference-menu-desktop.png; menu-1280.png; menu-390.png; allergy-block-390.png |
 
-## Decision 3: Show delivery conditions before checkout, with a sticky bar on mobile (information hierarchy / mobile layout)
+## Decision 3: Delivery conditions before checkout
 | Field | Content |
 |---|---|
-| Problem | Charges or restrictions appear late (minimum order or delivery fee only visible at the end). |
-| Decision | The menu shows the delivery rules at the top, and a sticky bottom bar shows item count, subtotal and a live hint ("Add Rs 120 more to reach the delivery minimum"). The same rule function feeds the bar, cart, checkout and test. |
-| Alternative | Show fees only on the checkout page, as many sites do. |
-| Reason | Customers can reach Rs 800 or free delivery while browsing instead of being blocked at the end. |
-| Tradeoff | The bar covers some screen space on mobile, so the page has bottom padding and the bar only appears when the order is not empty. |
-| Code location | `src/components/CartBar.jsx`, `getDeliveryHint` in `src/rules/orderRules.js` |
-| Evidence | Screenshot: add one Daal Chawal, bar says Rs 500 more needed; add more and it changes. |
+| Observed problem | Neither the captured initial branch-selection dialog nor the captured menu viewport states a delivery fee or minimum-order threshold. The cost cannot be calculated from those views. |
+| Decision | State the Rs 800 delivery minimum, Rs 150 fee and Rs 2000 free-delivery threshold on home/menu. A fixed order bar shows the current subtotal and remaining amount. |
+| Alternative | Reveal all fulfilment conditions at checkout. |
+| Reason | A customer can adjust an order before reaching a checkout block. |
+| Tradeoff | The fixed bar consumes mobile space. Extra footer clearance keeps lower controls reachable. |
+| Code | src/components/CartBar.jsx; src/rules/orderRules.js; src/styles/global.css |
+| Evidence | reference-delivery-dialog.png; delivery-hint-390.png; delivery-block-390.png |
+

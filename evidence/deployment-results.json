@@ -1,0 +1,37 @@
+[
+  {
+    "path": "/",
+    "status": 200,
+    "title": "Campus Tiffin | Home-style lunch for students"
+  },
+  {
+    "path": "/menu",
+    "status": 200,
+    "title": "Menu | Campus Tiffin"
+  },
+  {
+    "path": "/items/m01",
+    "status": 200,
+    "title": "Chicken Karahi Box | Campus Tiffin"
+  },
+  {
+    "path": "/cart",
+    "status": 200,
+    "title": "My order | Campus Tiffin"
+  },
+  {
+    "path": "/checkout",
+    "status": 200,
+    "title": "Checkout | Campus Tiffin"
+  },
+  {
+    "path": "/confirmation",
+    "status": 200,
+    "title": "Order confirmed | Campus Tiffin"
+  },
+  {
+    "path": "/anything",
+    "status": 200,
+    "title": "Campus Tiffin"
+  }
+]
