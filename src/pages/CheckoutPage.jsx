@@ -3,9 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import OrderSummary from '../components/OrderSummary.jsx';
 import EmptyState from '../components/EmptyState.jsx';
 import { validateOrderForm } from '../utils/validateForm.js';
-import { getOrderIssues, DELIVERY_AREAS, MIN_DELIVERY_ORDER, DELIVERY_FEE, FREE_DELIVERY_FROM } from '../rules/orderRules.js';
+import { getOrderIssues, TIME_SLOTS, DELIVERY_AREAS, MIN_DELIVERY_ORDER, DELIVERY_FEE, FREE_DELIVERY_FROM } from '../rules/orderRules.js';
 
-const TIME_SLOTS = ['12:00 PM - 12:30 PM', '12:30 PM - 1:00 PM', '1:00 PM - 1:30 PM', '1:30 PM - 2:00 PM'];
 
 function CheckoutPage({ lines, summary, form, onFormChange, onPlaceOrder }) {
   const navigate = useNavigate();

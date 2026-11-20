@@ -13,7 +13,7 @@ import NotFoundPage from './pages/NotFoundPage.jsx';
 import { loadMenu } from './services/menuLoader.js';
 import { readStorage, writeStorage } from './utils/storage.js';
 import { getCartLines, calculateSummary } from './utils/cartHelpers.js';
-import { checkQuantity } from './rules/orderRules.js';
+import { checkQuantity, MAX_PER_ITEM } from './rules/orderRules.js';
 
 const defaultFilters = { search: '', category: 'All', diet: 'All', sort: 'featured' };
 const defaultForm = { nickname: '', method: 'pickup', area: '', slot: '', nutAllergy: false, notes: '' };
@@ -33,7 +33,11 @@ function App() {
   const [reloadCount, setReloadCount] = useState(0);
   const [cart, setCart] = useState(loadSavedCart);
   const [filters, setFilters] = useState(defaultFilters); // kept here so filters survive page changes
-  const [form, setForm] = useState(() => ({ ...defaultForm, ...readStorage('ct_form', {}) }));
+  const [form, setForm] = useState(() => {
+    const saved = readStorage('ct_form', {});
+    return Object.fromEntries(Object.entries(defaultForm).map(([key, fallback]) =>
+      [key, saved && typeof saved[key] === typeof fallback ? saved[key] : fallback]));
+  });
   const [lastOrder, setLastOrder] = useState(() => readStorage('ct_last_order', null));
   const [cartNotices, setCartNotices] = useState([]);
   const [message, setMessage] = useState('');
@@ -78,7 +82,7 @@ function App() {
       } else if (item.stock === 0) {
         notices.push(item.name + ' is sold out, so it was removed from your order.');
       } else if (!checkQuantity(entry.qty, item.stock).valid) {
-        const newQty = Math.min(entry.qty, item.stock, 5);
+        const newQty = Math.min(entry.qty, item.stock, MAX_PER_ITEM);
         notices.push(item.name + ': only ' + newQty + ' can be ordered now, so the quantity was changed from ' + entry.qty + ' to ' + newQty + '.');
         fixedCart.push({ id: entry.id, qty: newQty });
       } else {

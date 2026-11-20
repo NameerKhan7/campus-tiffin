@@ -1,3 +1,5 @@
+import { DELIVERY_AREAS, TIME_SLOTS } from '../rules/orderRules.js';
+
 // Field-level validation for the checkout form. Returns an object like { nickname: 'message' }.
 export function validateOrderForm(form) {
   const errors = {};
@@ -11,11 +13,15 @@ export function validateOrderForm(form) {
     errors.nickname = 'Use only letters, numbers and spaces in the order name.';
   }
 
-  if (form.method === 'delivery' && form.area === '') {
+  if (!['pickup', 'delivery'].includes(form.method)) {
+    errors.method = 'Choose pickup or delivery.';
+  }
+
+  if (form.method === 'delivery' && !DELIVERY_AREAS.includes(form.area)) {
     errors.area = 'Choose your delivery area.';
   }
 
-  if (form.slot === '') {
+  if (!TIME_SLOTS.includes(form.slot)) {
     errors.slot = 'Choose a time slot.';
   }
 

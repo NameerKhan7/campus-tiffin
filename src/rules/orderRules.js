@@ -5,6 +5,7 @@
 // RULE 3 (pricing/fulfilment): delivery needs a Rs 800 minimum; fee is Rs 150, free from Rs 2000.
 //                              Pickup has no minimum and no fee. Delivery only to listed areas.
 
+export const TIME_SLOTS = ['12:00 PM - 12:30 PM', '12:30 PM - 1:00 PM', '1:00 PM - 1:30 PM', '1:30 PM - 2:00 PM'];
 export const MAX_PER_ITEM = 5;
 export const MIN_DELIVERY_ORDER = 800;
 export const FREE_DELIVERY_FROM = 2000;

@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {validateOrderForm} from '../src/utils/validateForm.js';
+import {findNutConflicts,getOrderIssues,TIME_SLOTS} from '../src/rules/orderRules.js';
+import {filterAndSort} from '../src/utils/filterItems.js';
+import {menuItems} from '../src/data/menu.js';
+const valid={nickname:'Demo Student',method:'pickup',area:'',slot:TIME_SLOTS[0],notes:'',nutAllergy:false};
+test('valid pickup form has no errors',()=>assert.deepEqual(validateOrderForm(valid),{}));
+test('unsupported saved delivery area and time slot are rejected',()=>{const errors=validateOrderForm({...valid,method:'delivery',area:'Karachi',slot:'midnight'});assert.ok(errors.area);assert.ok(errors.slot)});
+test('unsupported fulfilment method is rejected',()=>assert.ok(validateOrderForm({...valid,method:'invalid'}).method));
+test('invalid name and overlong notes return specific errors',()=>{const errors=validateOrderForm({...valid,nickname:'@@',notes:'a'.repeat(101)});assert.ok(errors.nickname);assert.ok(errors.notes)});
+test('nut allergy blocks the named conflicting item only when selected',()=>{const item=menuItems.find(i=>i.id==='m10');const lines=[{item,qty:1,lineTotal:item.price}];assert.deepEqual(findNutConflicts(false,lines),[]);assert.deepEqual(findNutConflicts(true,lines),[item.name]);assert.match(getOrderIssues(lines,{...valid,nutAllergy:true}).join(' '),/Almond Halwa Cup/)});
+test('search, category, diet and sort compose without mutating source',()=>{const original=menuItems.map(i=>i.id);const result=filterAndSort(menuItems,{search:'rice',category:'Meals',diet:'veg',sort:'price-low'});assert.ok(result.length>0);assert.ok(result.every(i=>i.category==='Meals'&&i.diet==='veg'));assert.deepEqual(menuItems.map(i=>i.id),original)});

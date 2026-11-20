@@ -166,3 +166,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
 }
+
+/* Keep footer controls reachable above the fixed mobile order bar. */
+.site-footer { padding-bottom: 14rem; }
+html { scroll-padding-bottom: 11rem; }
+
